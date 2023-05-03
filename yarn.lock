@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@aave/core-v3@^1.17.2":
+  version "1.17.2"
+  resolved "https://registry.yarnpkg.com/@aave/core-v3/-/core-v3-1.17.2.tgz#dfb543da87d4d6429e0c277b46b84057349f590f"
+  integrity sha512-ztCyKTALoeOQy6MlWVRCvHgilh6vT+d6lwjXhIsmlEYlA0v3L6dQBIyTFIzHBUfcpEjs0T3tSmcVxGY+GAUZ1g==
+
 "@chainsafe/as-sha256@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@chainsafe/as-sha256/-/as-sha256-0.3.1.tgz#3639df0e1435cab03f4d9870cc3ac079e57a6fc9"
