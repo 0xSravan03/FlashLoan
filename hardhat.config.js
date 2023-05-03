@@ -12,5 +12,14 @@ module.exports = {
       accounts: [PRIVATE_KEY],
     },
   },
-  solidity: "0.8.18",
+  solidity: {
+    compilers: [
+      {
+        version: "0.8.10",
+      },
+      {
+        version: "0.8.18",
+      },
+    ],
+  },
 };

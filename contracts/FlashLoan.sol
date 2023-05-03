@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.10;
 
 import "@aave/core-v3/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol";
 import "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
@@ -11,7 +11,7 @@ contract FlashLoan is FlashLoanSimpleReceiverBase {
     constructor(
         address _addressProvider
     ) FlashLoanSimpleReceiverBase(IPoolAddressesProvider(_addressProvider)) {
-        owner = msg.sender;
+        owner = payable(msg.sender);
     }
 
     modifier onlyOwner() {
@@ -23,8 +23,8 @@ contract FlashLoan is FlashLoanSimpleReceiverBase {
         address asset,
         uint256 amount,
         uint256 premium,
-        address initiator,
-        bytes calldata params
+        address /*initiator*/,
+        bytes calldata /*params*/
     ) external override returns (bool) {
         // Our Custom Logic here
 
@@ -38,7 +38,7 @@ contract FlashLoan is FlashLoanSimpleReceiverBase {
         POOL.flashLoanSimple(address(this), asset, amount, "", 0);
     }
 
-    function getBalance(address asset) external view returns (uint256) {
+    function getBalance(address asset) public view returns (uint256) {
         uint256 balance = IERC20(asset).balanceOf(address(this));
         return balance;
     }
@@ -46,7 +46,11 @@ contract FlashLoan is FlashLoanSimpleReceiverBase {
     function withdraw(address asset) external onlyOwner {
         uint256 balance = getBalance(asset);
         require(balance > 0, "INSUFFICIENT_FUNDS");
-        bool sent = IERC20(asset).transfer(msg.sender, balance);
+        bool sent = IERC20(asset).transfer(owner, balance);
         require(sent, "TRANSFER_FAILED");
     }
+
+    receive() external payable {}
+
+    fallback() external payable {}
 }
