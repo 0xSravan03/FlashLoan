@@ -27,10 +27,11 @@ contract FlashLoan is FlashLoanSimpleReceiverBase {
         bytes calldata /*params*/
     ) external override returns (bool) {
         // Our Custom Logic here
+        //
+        //
 
         uint256 amountOwed = amount + premium;
         IERC20(asset).approve(address(POOL), amountOwed);
-
         return true;
     }
 
